@@ -31,4 +31,15 @@ public class ArticleController {
         }
         return ResponseEntity.ok(article);
     }
+    // 특정 article 수정
+    @PutMapping("/article/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article request) {
+        Article article = store.get(id);
+        if (article == null) {
+            return ResponseEntity.notFound().build();
+        }
+        article.setTitle(request.getTitle());
+        article.setContent(request.getContent());
+        return ResponseEntity.ok(article);
+    }
 }
