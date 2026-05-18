@@ -42,4 +42,13 @@ public class ArticleController {
         article.setContent(request.getContent());
         return ResponseEntity.ok(article);
     }
+    // 특정 article 삭제
+    @DeleteMapping("/article/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+        if (!store.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        store.remove(id);
+        return ResponseEntity.noContent().build();
+    }
 }
