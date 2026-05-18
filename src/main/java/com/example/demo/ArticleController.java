@@ -22,4 +22,13 @@ public class ArticleController {
         store.put(id, article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
+    // 특정 article 조회
+    @GetMapping("/article/{id}")
+    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
+        Article article = store.get(id);
+        if (article == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(article);
+    }
 }
