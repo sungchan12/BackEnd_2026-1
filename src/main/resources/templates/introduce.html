@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자기소개</title>
+</head>
+<body>
+    <p th:if="${name != null}">안녕하세요 제 이름은 <span th:text="${name}"></span>입니다!</p>
+    <p th:if="${name == null}">안녕하세요 제 이름은 성찬영입니다!</p>
+</body>
+</html>
