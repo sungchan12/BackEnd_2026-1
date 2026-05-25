@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ public class HelloController {
     public String hello2() {
         return "hello";
     }
+
     @GetMapping("/introduce")
     public String introduce(@RequestParam(required = false) String name, Model model) {
         model.addAttribute("name", name);
