@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Article;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,12 @@ public class ArticleRepository {
 
     public Optional<Article> findById(Long id) {
         return Optional.ofNullable(store.get(id));
+    }
+
+    public List<Article> findByBoardId(Long boardId) {
+        return store.values().stream()
+            .filter(a -> boardId.equals(a.getBoardId()))
+            .collect(Collectors.toList());
     }
 
     public Article save(Article article) {

@@ -24,33 +24,22 @@ public class MemberController {
 
     @GetMapping("/members/{id}")
     public ResponseEntity<Member> getMember(@PathVariable Long id) {
-        return memberService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(memberService.findById(id));
     }
 
     @PostMapping("/members")
-    public ResponseEntity<Object> createMember(@RequestBody Member request) {
-        try {
-            Member created = memberService.create(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(created);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+    public ResponseEntity<Member> createMember(@RequestBody Member request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.create(request));
     }
 
     @PutMapping("/members/{id}")
     public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody Member request) {
-        return memberService.update(id, request)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(memberService.update(id, request));
     }
 
     @DeleteMapping("/members/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
-        if (!memberService.delete(id)) {
-            return ResponseEntity.notFound().build();
-        }
+        memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

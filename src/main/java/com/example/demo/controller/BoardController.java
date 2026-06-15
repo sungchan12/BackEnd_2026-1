@@ -24,29 +24,22 @@ public class BoardController {
 
     @GetMapping("/boards/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
-        return boardService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(boardService.findById(id));
     }
 
     @PostMapping("/boards")
     public ResponseEntity<Board> createBoard(@RequestBody Board request) {
-        Board created = boardService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED).body(boardService.create(request));
     }
 
     @PutMapping("/boards/{id}")
     public ResponseEntity<Board> updateBoard(@PathVariable Long id, @RequestBody Board request) {
-        return boardService.update(id, request)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(boardService.update(id, request));
     }
 
     @DeleteMapping("/boards/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
-        if (!boardService.delete(id)) {
-            return ResponseEntity.notFound().build();
-        }
+        boardService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
