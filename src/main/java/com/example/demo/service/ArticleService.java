@@ -25,6 +25,10 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
+    public List<Article> findByBoardId(Long boardId) {
+        return articleRepository.findByBoardId(boardId);
+    }
+
     public Article create(Article request) {
         LocalDateTime now = LocalDateTime.now();
         Article article = new Article(
