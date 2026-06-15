@@ -38,6 +38,14 @@ public class ArticleController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/articles/{boardId}")
+    public ResponseEntity<ArticleResponse> getArticleByBoardId(@PathVariable Long boardId) {
+        return articleService.findById(boardId)
+            .map(this::toResponse)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/articles")
     public ResponseEntity<Article> createArticle(@RequestBody Article request) {
         Article created = articleService.create(request);
