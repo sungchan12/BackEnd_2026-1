@@ -1,15 +1,35 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "article")
 public class Article {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "author_id")
     private Long authorId;
+
+    @Column(name = "board_id")
     private Long boardId;
+
     private String title;
     private String content;
+
+    @Column(name = "created_date")
     private LocalDateTime createdAt;
+
+    @Column(name = "modified_date")
     private LocalDateTime updatedAt;
 
     public Article() {}
