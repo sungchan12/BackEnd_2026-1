@@ -1,42 +1,46 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.BoardDao;
 import com.example.demo.domain.Board;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.BoardRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class BoardService {
 
-    private final BoardRepository boardRepository;
+    private final BoardDao boardDao;
 
-    public BoardService(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
+    public BoardService(BoardDao boardDao) {
+        this.boardDao = boardDao;
     }
 
     public List<Board> findAll() {
-        return boardRepository.findAll();
+        return boardDao.findAll();
     }
 
     public Board findById(Long id) {
-        return boardRepository.findById(id)
+        return boardDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 게시판입니다: " + id));
     }
 
+    @Transactional
     public Board create(Board request) {
-        return boardRepository.save(new Board(null, request.getName()));
+        return boardDao.save(new Board(null, request.getName()));
     }
 
+    @Transactional
     public Board update(Long id, Board request) {
         Board board = findById(id);
         if (request.getName() != null) board.setName(request.getName());
-        return boardRepository.save(board);
+        return boardDao.save(board);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
-        boardRepository.deleteById(id);
+        boardDao.deleteById(id);
     }
 }
